@@ -1,42 +1,39 @@
-pipeline {
+pipeline{
     agent any
-
-    stages {
-
-        stage("checkout") {
-            steps {
+    stages{
+        stage("checkout"){
+            steps{
                 echo "========executing checkout========"
                 checkout scm
             }
-        }
-
-        stage("setup environment") {
-            steps {
-                echo "========executing settingup environment========"
-
+        }            
+        stage("setup environment"){
+            steps{
+                  echo "========executing settingup environment========"
                 bat '''
                 python -m venv .venv1
-                .venv1\\Scripts\\pip install -r requirements.txt
+                call .venv1\\Scripts\\activate
+                pip install -r requirements.txt
                 '''
             }
         }
-
-        stage("run tests") {
-            steps {
+        stage("run tests"){
+            steps{
                 bat '''
                 echo "========executing unittests========"
-                .venv1\\Scripts\\pytest tests/
+                call .venv1\\Scripts\\activate
+                pytest tests/
                 '''
             }
         }
-
-        stage("Deploy") {
-            steps {
+        stage("Deploy"){
+            steps{
                 bat '''
-                echo "========deploying========"
-                start /B .venv1\\Scripts\\python app.py
+                 echo "========deploying========"
+                 start /B python app.py   
                 '''
             }
         }
     }
-}
+}    
+    
