@@ -30,7 +30,6 @@ pipeline{
             steps{
                 bat '''
                  echo "========deploying========"
-                 call .venv1\\Scripts\\activate
                  start /B python app.py   
                 '''
             }
