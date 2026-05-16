@@ -2,9 +2,10 @@ from flask import Flask,request
 from flask_restful import Api,Resource,reqparse,fields,marshal_with
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
-
+import os
 app=Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI']="sqlite:///userresource.db"
+basedir=os.path.abspath(os.path.dirname(__file__))
+app.config['SQLALCHEMY_DATABASE_URI']="sqlite:///"+os.path.join(basedir,"userresource.db")
 CORS(app)
 api=Api(app)
 db=SQLAlchemy(app)
@@ -65,4 +66,5 @@ api.add_resource(UserResource,"/user/<int:id>")
 if __name__=="__main__":
     with app.app_context():
         db.create_all()
-    app.run(host='0.0.0.0',port=5000)   
+    app.run(host='0.0.0.0',port=5000)  
+    

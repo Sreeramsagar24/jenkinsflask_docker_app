@@ -11,7 +11,7 @@ pipeline{
             steps{
                 script{
                   echo "========executing settingup environment========"
-                  bat 'docker build -t flask-jenkins-image:latest .'
+                  bat 'docker build -t flask-jenkins-sqlite-image:latest .'
                 }
             }
         }
@@ -19,7 +19,7 @@ pipeline{
         stage("Deploy Docker Container"){
             steps{
                 script{
-                bat 'docker run -d -p 5000:5000 --name flask-container flask-jenkins-image:latest'
+                bat 'docker run -d -p 5000:5000 --name flask-sqlite-container flask-jenkins-sqlite-image:latest'
                 }
             }
         }
